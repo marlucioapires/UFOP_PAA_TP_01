@@ -19,10 +19,12 @@ int max(int*, int, int*);
  *
  * Retorna uma instância do TAD problema ou retorna NULL, caso haja problemas
  * na alocação dinâmica de memória ou se n menor ou igual a zero.
+ *
+ * Complexidade: O(1)
  */
 problema cria_problema(int n, int h)
 {
-    problema p = NULL;
+    problema p = NULL; // Variável que será retornada ao final da função.
 
     // Verifica se o valor de n é válido.
     if (n > 0) {
@@ -77,7 +79,7 @@ void termina_problema(problema p)
     if (p) {
         free(p->caixas); // Desaloca o vetor caixas.
         free(p->v); // Desaloca o vetor v.
-        free(p); // Desacloca o espaço utilizado pela variável do tipo problema.
+        free(p); // Desaloca o espaço utilizado pela variável do tipo problema.
     }
 } // fim da função termina_problema
 
@@ -97,7 +99,8 @@ int add_caixa(problema p, caixa c)
     // A variável i_caixas controla quantas caixas de fato foram adicionadas e
     // n é o tamanho (número de caixas) do problema.
     if (p->i_caixas < p->n) {
-        p->caixas[p->i_caixas++] = c; // Adiciona a caixa (c) ao vetor de caixas (p->caixas) e incrementa i_caixas.
+        p->caixas[p->i_caixas++] = c;   // Adiciona a caixa (c) ao vetor de caixas (p->caixas)
+                                        // e incrementa i_caixas.
         return 1; // Sucesso na inserção.
     }
 
@@ -136,8 +139,8 @@ int add_valor(problema p, int v)
  *
  * Retorna o valor da solução ótima encontrada, além de retornar um vetor (e seu tamanho) com
  * os índices das caixas utilizadas no empilhamento de altura máxima h. Em caso de falha na
- * alocação de recursos computacionais, a função retorna o valor -1, NULL, no lugar do vetor
- * com os índices das caixas, e o tamanho 0 (zero).
+ * alocação de recursos computacionais, a função retorna o valor -1, NULL no lugar do vetor
+ * com os índices das caixas e o tamanho 0 (zero).
  *
  * Obs.: A função cria e retorna um vetor alocado dinamicamente. É responsabilidade do utilizador
  * desta função desalocá-lo posteriormente.
@@ -156,9 +159,10 @@ int empilhamento_bottom_up(problema p, int** vetor_de_caixas_empilhadas, int* ta
     // relação das demais caixas que são empilháveis sobre ela (empilhamento estável).
     lista *vetor_lista_de_caixas_empilhaveis;
 
-    tipo_nodo *no; // Variável auxiliar.
+    tipo_nodo *no; // Variável auxiliar utilizada para percorrer a lista de caixas empilháveis.
 
-    if (*vetor_de_caixas_empilhadas) // Verifica se a variável passada como parâmetro representa memória alocada.
+    // Verifica se a variável passada como parâmetro representa memória alocada.
+    if (*vetor_de_caixas_empilhadas) 
         free(*vetor_de_caixas_empilhadas); // Libera a memória alocada.
 
     *vetor_de_caixas_empilhadas = NULL; // Inicialização das variáveis passadas por
@@ -168,7 +172,8 @@ int empilhamento_bottom_up(problema p, int** vetor_de_caixas_empilhadas, int* ta
     if (!matriz_emp) // Verifica se a alocação foi bem sucedida.
         return -1; // Falha no cálculo da solução ótima, devido à ausência de recursos computacionais.
 
-    matriz_emp[0] = (int*) malloc(sizeof(int) * (p->h + 1) * (p->n)); // Aloca o restante da matriz, sem fragmentação.
+    // Aloca o restante da matriz, sem fragmentação.
+    matriz_emp[0] = (int*) malloc(sizeof(int) * (p->h + 1) * (p->n)); 
     if (!matriz_emp[0]) { // Verifica se a alocação foi bem sucedida.
         free(matriz_emp);       // Libera os recursos alocados anteriormente.
         return -1; // Falha no cálculo da solução ótima, devido à ausência de recursos computacionais.
@@ -181,7 +186,8 @@ int empilhamento_bottom_up(problema p, int** vetor_de_caixas_empilhadas, int* ta
         return -1; // Falha no cálculo da solução ótima, devido à ausência de recursos computacionais.
     }
 
-    matriz_indices[0] = (int*) malloc(sizeof(int) * (p->h + 1) * p->n); // Aloca o restante da matriz, sem fragmentação.
+    // Aloca o restante da matriz, sem fragmentação.
+    matriz_indices[0] = (int*) malloc(sizeof(int) * (p->h + 1) * p->n); 
     if (!matriz_indices[0]) { // Verifica se a alocação foi bem sucedida.
         free(matriz_emp[0]);    // Libera os recursos
         free(matriz_emp);       // alocados
@@ -199,6 +205,7 @@ int empilhamento_bottom_up(problema p, int** vetor_de_caixas_empilhadas, int* ta
         return -1; // Falha no cálculo da solução ótima, devido à ausência de recursos computacionais.
     }
 
+    // Inicialização de valores.
     for(i = 0; i < p->n; i++) {
         matriz_emp[0][i] = 0; // Inicializa a primeira linha da matriz com 0 (zero).
         matriz_indices[0][i] = -1;  // Inicializa a primeira linha da matriz que guarda
@@ -227,7 +234,7 @@ int empilhamento_bottom_up(problema p, int** vetor_de_caixas_empilhadas, int* ta
                 no = vetor_lista_de_caixas_empilhaveis[i]->first;
 
                 // As linhas comentadas abaixo são a forma de se percorrer a lista encadeada utilizando
-                // operação do TAD lista própria para este fim.
+                // operação do TAD lista (própria para este fim).
                 //no = NULL;
                 //j = get_next_chave(vetor_lista_de_caixas_empilhaveis[i], &no);
 
@@ -251,7 +258,7 @@ int empilhamento_bottom_up(problema p, int** vetor_de_caixas_empilhadas, int* ta
                     no = no->next; // Altera a referência do ponteiro para o próximo nó da lista.
 
                     // A linha comentada abaixo é a forma de se percorrer a lista encadeada utilizando
-                    // operação do TAD lista própria para este fim.
+                    // operação do TAD lista (própria para este fim).
                     //j = get_next_chave(vetor_lista_de_caixas_empilhaveis[i], &no);
                 }
             }
@@ -277,7 +284,7 @@ int empilhamento_bottom_up(problema p, int** vetor_de_caixas_empilhadas, int* ta
     free(matriz_indices[0]);    // Libera a memória alocada para a matriz
     free(matriz_indices);       // que guarda a sequência de empilhamento.
 
-    return solucao_otima; // Retorna a solução ótima.
+    return solucao_otima; // Retorna a solução ótima ou -1, em caso de falha na alocação de memória.
 } // fim da função empilhamento_bottom_up
 
 
@@ -292,13 +299,13 @@ int empilhamento_bottom_up(problema p, int** vetor_de_caixas_empilhadas, int* ta
  *      - o tamanho do problema n, ou seja, o número de caixas;
  *      - o vetor de caixas;
  *      - o vetor de valores associados às caixas;
- *      - a matriz que será usada para armazenar as diversas soluções ótimas, que é um artifício
+ *      - a matriz (h x n) que será usada para armazenar as diversas soluções ótimas, que é um artifício
  *           da programação dinâmica para evitar cálculos já realizados. Na primeira chamada a esta
  *           função recursiva, a matriz deve ter sua primeira linha inicilizada com zeros e as demais
  *           células com o valor -1 (o valor menos um indica que aquela posição da matriz ainda não
  *           foi calculada);
- *      - a matriz que será utilizada para armazenar os índices das caixas que compõem as sequências
- *           de empilhamentos. Na primeira chamada a esta função recursiva, a matriz deve ter sua
+ *      - a matriz (h x n) que será utilizada para armazenar os índices das caixas que compõem as sequências
+ *           de empilhamentos. Na primeira chamada a esta função recursiva, a matriz deve ter sua primeira
  *           linha inicializada com o valor -1;
  *      - um vetor com as listas de todas as caixas que são empilháveis.
  *
@@ -311,7 +318,7 @@ int empilhamento_recursiva(int h, int indice_caixa, int n, caixa* caixas, int* v
                            int** matriz_emp, int** matriz_indices, lista* vetor_lista_de_caixas_empilhaveis)
 {
     int i, h_aux, emp_aux; // Variáveis auxiliares.
-    tipo_nodo *no; // Variável do tipo tio_nodo utilizada para percorrer a lista de caixas empilháveis.
+    tipo_nodo *no; // Variável do tipo tipo_nodo utilizada para percorrer a lista de caixas empilháveis.
 
     if (matriz_emp[h][indice_caixa] != -1)  // Se o valor procurado já foi calculado, ou seja, já se
         return matriz_emp[h][indice_caixa]; // encontra na matriz de soluções ótimas, basta retorná-lo.
@@ -328,6 +335,11 @@ int empilhamento_recursiva(int h, int indice_caixa, int n, caixa* caixas, int* v
             // e verifica-se qual o empilhamento, de uma solução de subproblema menor, mais o valor desta
             // caixa apresenta o maior valor.
             no = vetor_lista_de_caixas_empilhaveis[indice_caixa]->first;
+
+            // As linhas comentadas abaixo são a forma de se percorrer a lista encadeada utilizando
+            // operação do TAD lista (própria para este fim).
+            //no = NULL;
+            //j = get_next_chave(vetor_lista_de_caixas_empilhaveis[indice_caixa], &no);
 
             while(no) {
                 i = no->item.chave; // Cada nó da lista contém o índice de uma caixa que é empilhável.
@@ -354,6 +366,10 @@ int empilhamento_recursiva(int h, int indice_caixa, int n, caixa* caixas, int* v
                 }
 
                 no = no->next; // Altera a referência do ponteiro para o próximo nó da lista.
+
+                // A linha comentada abaixo é a forma de se percorrer a lista encadeada utilizando
+                // operação do TAD lista (própria para este fim).
+                //j = get_next_chave(vetor_lista_de_caixas_empilhaveis[indice_caixa], &no);
             }
         }
     }
@@ -388,7 +404,8 @@ int empilhamento_top_down(problema p, int** vetor_de_caixas_empilhadas, int* tam
     // relação das demais caixas que são empilháveis sobre ela (empilhamento estável).
     lista *vetor_lista_de_caixas_empilhaveis;
 
-    if (*vetor_de_caixas_empilhadas) // Verifica se a variável passada como parâmetro representa memória alocada.
+    // Verifica se a variável passada como parâmetro representa memória alocada.
+    if (*vetor_de_caixas_empilhadas) 
         free(*vetor_de_caixas_empilhadas); // Libera a memória alocada.
 
     *vetor_de_caixas_empilhadas = NULL; // Inicialização das variáveis passadas por
@@ -398,7 +415,8 @@ int empilhamento_top_down(problema p, int** vetor_de_caixas_empilhadas, int* tam
     if (!matriz_emp) // Verifica se a alocação foi bem sucedida.
         return -1; // Falha no cálculo da solução ótima, devido à ausência de recursos computacionais.
 
-    matriz_emp[0] = (int*) malloc(sizeof(int) * (p->h + 1) * (p->n)); // Aloca o restante da matriz, sem fragmentação.
+    // Aloca o restante da matriz, sem fragmentação.
+    matriz_emp[0] = (int*) malloc(sizeof(int) * (p->h + 1) * (p->n)); 
     if (!matriz_emp[0]) { // Verifica se a alocação foi bem sucedida.
         free(matriz_emp); // Libera os recursos alocados anteriormente.
         return -1; // Falha no cálculo da solução ótima, devido à ausência de recursos computacionais.
@@ -410,7 +428,8 @@ int empilhamento_top_down(problema p, int** vetor_de_caixas_empilhadas, int* tam
         return -1; // Falha no cálculo da solução ótima, devido à ausência de recursos computacionais.
     }
 
-    matriz_indices[0] = (int*) malloc(sizeof(int) * (p->h + 1) * p->n); // Aloca o restante da matriz, sem fragmentação.
+    // Aloca o restante da matriz, sem fragmentação.
+    matriz_indices[0] = (int*) malloc(sizeof(int) * (p->h + 1) * p->n); 
     if (!matriz_indices[0]) { // Verifica se a alocação foi bem sucedida.
         free(matriz_emp[0]);    // Libera os recursos
         free(matriz_emp);       // alocados
@@ -428,6 +447,7 @@ int empilhamento_top_down(problema p, int** vetor_de_caixas_empilhadas, int* tam
         return -1; // Falha no cálculo da solução ótima, devido à ausência de recursos computacionais.
     }
 
+    // Inicialização de valores.
     for(i = 0; i < p->n; i++) {
         matriz_emp[0][i] = 0; // Inicializa a primeira linha da matriz com 0 (zero).
         matriz_indices[0][i] = -1;  // Inicializa a primeira linha da matriz que guarda
@@ -478,7 +498,7 @@ int empilhamento_top_down(problema p, int** vetor_de_caixas_empilhadas, int* tam
     free(matriz_indices[0]);    // Libera a memória alocada para a matriz
     free(matriz_indices);       // que guarda a sequência de empilhamento.
 
-    return solucao_otima; // Retorna a solução ótima.
+    return solucao_otima; // Retorna a solução ótima ou -1, em caso de falha na alocação de memória.
 } // fim da função empilhamento_top_down
 
 /*********************************************************************************************************
@@ -507,10 +527,10 @@ int empilhamento_top_down(problema p, int** vetor_de_caixas_empilhadas, int* tam
  */
 int* cria_vetor_caixas_empilhadas(int** matriz_indices, caixa* caixas, int h, int pos_ultima_caixa_empilhada, int* tam)
 {
-    int *vetor = NULL, i, aux;
-    lista l;
-    tipo_elemento e;
-    tipo_nodo *no;
+    int *vetor = NULL, i, aux; // Vetor que será retornado pela função e variáveis auxiliares.
+    lista l; // Variável auxiliar usada para criar uma lista encadeada.
+    tipo_elemento e; // Variável auxiliar usada para inserção de elementos em lista encadeada.
+    tipo_nodo *no; // Variável auxiliar usada para percorrer os nós de uma lista encadeada.
 
     *tam = 0; // O tamanho do vetor que será criado é inicializado com 0 (zero).
 

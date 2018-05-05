@@ -12,7 +12,7 @@
  *
  * Retorna NULL caso haja problemas com a abertura do arquivo (arquivo inexistente, permissão
  * negada, etc.) ou caso haja problemas no parsing do arquivo texto (organização dos dados
- * diferente da forma especificada no enuncSiado do trabalho).
+ * diferente da forma especificada no enunciado do trabalho).
  */
 problema processa_arquivo_entrada(const char* nome_arquivo)
 {
@@ -28,11 +28,12 @@ problema processa_arquivo_entrada(const char* nome_arquivo)
     // Verificando se o arquivo foi aberto com sucesso.
     if (ptr_arq != NULL) {
 
-        // Tenta realizar a leitura dos valores iniciais (n e h) do arquivo texto.
+        // Tenta realizar a leitura dos valores iniciais (n e h) do arquivo texto e
+        // verifica se houve sucesso na leitura.
         if (fscanf(ptr_arq, "%d%d", &n, &h) == 2) {
 
             // Aloca memória para uma instância do TAD problema, com tamanho igual a 2*n,
-            // já que cada caixa pode ser rotacionadade duas maneiras.
+            // já que cada caixa pode ser rotacionada de duas maneiras.
             p = cria_problema((2*n), h);
 
             // Verifica se a alocação de memória foi realizada com sucesso.
@@ -47,7 +48,8 @@ problema processa_arquivo_entrada(const char* nome_arquivo)
             // à instância do TAD problema.
             for(i = 1; i <= n && !feof(ptr_arq); i++) {
 
-                if (fscanf(ptr_arq, "%d", &v)) {
+                // Tenta ler um int do arquivo e verifica se a leitura foi bem sucedida.
+                if (fscanf(ptr_arq, "%d", &v)) { 
 
                     add_valor(p, v); // Adiciona o valor associado à caixa com a rotação 1.
                     add_valor(p, v); // Adiciona o valor associado à caixa com a rotação 2.
@@ -55,9 +57,9 @@ problema processa_arquivo_entrada(const char* nome_arquivo)
                 } else {
                     // Caso haja problemas no parsing do arquivo texto, os recursos
                     // são liberados e retorna-se NULL.
-                    termina_problema(p);
-                    fclose(ptr_arq);
-                    return NULL;
+                    termina_problema(p); // Libera a memória alocada.
+                    fclose(ptr_arq); // Fecha o arquivo.
+                    return NULL; // Retorna NULL devido a problemas no parsing do arquivo.
                 }
             }
 
@@ -65,6 +67,7 @@ problema processa_arquivo_entrada(const char* nome_arquivo)
             // à instância do TAD problema.
             for(i = 1; i <= n && !feof(ptr_arq); i++) {
 
+                // Tenta ler as dimensões da caixa e verifica se alitura foi bem sucedida.
                 if (fscanf(ptr_arq, "%d", &c.l) &&      // Leitura da largura.
                         fscanf(ptr_arq, "%d", &c.a) &&  // Leitura da altura.
                         fscanf(ptr_arq, "%d", &c.p)) {  // Leitura da profundidade.
@@ -79,17 +82,17 @@ problema processa_arquivo_entrada(const char* nome_arquivo)
 
                 } else {
                     // Caso haja problemas no parsing do arquivo texto, os recursos
-                    // são liberados e retorna-se NULL.
-                    termina_problema(p);
-                    p = NULL;
-                    break;
+                    // são liberados e interrompe-se a estrutura de repetição.
+                    termina_problema(p); // Libera a memória alocada.
+                    p = NULL; // A variável recebe NULL, que será o valor retornado pela função.
+                    break;  // Interrompe o for devido a problemas no parsing do arquivo.
                 }
             }
         }
         fclose(ptr_arq); // Fecha o arquivo.
     }
 
-    return p;
+    return p; // Retorna uma instância do TAD problema ou NULL.
 } // fim da função processa_arquivo_entrada
 
 
@@ -143,4 +146,3 @@ int gera_arquivo_saida(const char* nome_arquivo, int solucao_otima, int* vetor_d
 
     return 0; // Falha na gravação do arquivo.
 } // fim da função gera_arquivo_saida
-

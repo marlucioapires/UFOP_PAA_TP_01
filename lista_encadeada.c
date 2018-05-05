@@ -121,7 +121,7 @@ int insere_inicio(lista l, tipo_elemento e)
 } // fim da função insere_inicio
 
 
-/* Permite obter o valor armazenado em um nó de uma lista, com o um artifício que permite manter
+/* Permite obter o valor armazenado em um nó de uma lista, com um artifício que permite manter
  * a posição do nó e assim percorrer todos os nós sequencialmente. Os parâmetros de entrada são
  * a lista que se deseja consultar e a referência para o último nó lido. Se último nó lido é NULL,
  * retorna-se o conteúdo do primeiro nó da lista. Caso contrário, retorna-se o conteúdo do nó
