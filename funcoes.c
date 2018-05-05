@@ -2,25 +2,25 @@
 #include <stdlib.h>
 #include "funcoes.h"
 
-/* Processa o arquivo texto passado como par‚metro e retorna uma inst‚ncia do tipo abstrato
- * de dados (TAD) problema (empilhamento de caixas). Os dados obtidos do arquivo texto s„o:
+/* Processa o arquivo texto passado como par√¢metro e retorna uma inst√¢ncia do tipo abstrato
+ * de dados (TAD) problema (empilhamento de caixas). Os dados obtidos do arquivo texto s√£o:
  *
- *      - tamanho do problema (n˙mero de caixas);
- *      - altura m·xima da pilha de caixas;
+ *      - tamanho do problema (n√∫mero de caixas);
+ *      - altura m√°xima da pilha de caixas;
  *      - vetor de caixas, com as suas respectivas medidas (largura, altura e profundidade);
- *      - vetor de valores associados ‡s caixas.
+ *      - vetor de valores associados √†s caixas.
  *
- * Retorna NULL caso haja problemas com a abertura do arquivo (arquivo inexistente, permiss„o
- * negada, etc.) ou caso haja problemas no parsing do arquivo texto (organizaÁ„o dos dados
+ * Retorna NULL caso haja problemas com a abertura do arquivo (arquivo inexistente, permiss√£o
+ * negada, etc.) ou caso haja problemas no parsing do arquivo texto (organiza√ß√£o dos dados
  * diferente da forma especificada no enunciado do trabalho).
  */
 problema processa_arquivo_entrada(const char* nome_arquivo)
 {
     FILE *ptr_arq; // Ponteiro para o arquivo a ser manipulado.
-    int n, h, i, aux, v; // Vari·veis auxiliares.
-    caixa c; // Vari·vel auxiliar.
-    problema p = NULL; // Inst‚ncia do tipo problema que ser· retornada
-                       // ao fim do processamento do arquivo.
+    int n, h, i, aux, v; // Vari√°veis auxiliares.
+    caixa c; // Vari√°vel auxiliar.
+    problema p = NULL; // Inst√¢ncia do tipo problema que ser√° retornada
+    // ao fim do processamento do arquivo.
 
     // Abre o arquivo texto, como somente leitura.
     ptr_arq = fopen(nome_arquivo, "r");
@@ -32,11 +32,11 @@ problema processa_arquivo_entrada(const char* nome_arquivo)
         // verifica se houve sucesso na leitura.
         if (fscanf(ptr_arq, "%d%d", &n, &h) == 2) {
 
-            // Aloca memÛria para uma inst‚ncia do TAD problema, com tamanho igual a 2*n,
-            // j· que cada caixa pode ser rotacionada de duas maneiras.
+            // Aloca mem√≥ria para uma inst√¢ncia do TAD problema, com tamanho igual a 2*n,
+            // j√° que cada caixa pode ser rotacionada de duas maneiras.
             p = cria_problema((2*n), h);
 
-            // Verifica se a alocaÁ„o de memÛria foi realizada com sucesso.
+            // Verifica se a aloca√ß√£o de mem√≥ria foi realizada com sucesso.
             if (!p) {
 
                 fclose(ptr_arq); // Fecha o arquivo e libera o recurso.
@@ -45,29 +45,29 @@ problema processa_arquivo_entrada(const char* nome_arquivo)
             }
 
             // Realiza a leitura dos n valores associados a cada caixa e adiciona-os
-            // ‡ inst‚ncia do TAD problema.
+            // √† inst√¢ncia do TAD problema.
             for(i = 1; i <= n && !feof(ptr_arq); i++) {
 
                 // Tenta ler um int do arquivo e verifica se a leitura foi bem sucedida.
-                if (fscanf(ptr_arq, "%d", &v)) { 
+                if (fscanf(ptr_arq, "%d", &v)) {
 
-                    add_valor(p, v); // Adiciona o valor associado ‡ caixa com a rotaÁ„o 1.
-                    add_valor(p, v); // Adiciona o valor associado ‡ caixa com a rotaÁ„o 2.
+                    add_valor(p, v); // Adiciona o valor associado √† caixa com a rota√ß√£o 1.
+                    add_valor(p, v); // Adiciona o valor associado √† caixa com a rota√ß√£o 2.
 
                 } else {
                     // Caso haja problemas no parsing do arquivo texto, os recursos
-                    // s„o liberados e retorna-se NULL.
-                    termina_problema(p); // Libera a memÛria alocada.
+                    // s√£o liberados e retorna-se NULL.
+                    termina_problema(p); // Libera a mem√≥ria alocada.
                     fclose(ptr_arq); // Fecha o arquivo.
                     return NULL; // Retorna NULL devido a problemas no parsing do arquivo.
                 }
             }
 
-            // Realiza a leitura das dimensıes das n caixas e adiciona-as
-            // ‡ inst‚ncia do TAD problema.
+            // Realiza a leitura das dimens√µes das n caixas e adiciona-as
+            // √† inst√¢ncia do TAD problema.
             for(i = 1; i <= n && !feof(ptr_arq); i++) {
 
-                // Tenta ler as dimensıes da caixa e verifica se alitura foi bem sucedida.
+                // Tenta ler as dimens√µes da caixa e verifica se alitura foi bem sucedida.
                 if (fscanf(ptr_arq, "%d", &c.l) &&      // Leitura da largura.
                         fscanf(ptr_arq, "%d", &c.a) &&  // Leitura da altura.
                         fscanf(ptr_arq, "%d", &c.p)) {  // Leitura da profundidade.
@@ -78,13 +78,13 @@ problema processa_arquivo_entrada(const char* nome_arquivo)
                     c.l = c.a; // troca a sua medida de largura
                     c.a = aux; // com a altura.
 
-                    add_caixa(p, c); // Adiciona a caixa (com rotaÁ„o 2) ao problema.
+                    add_caixa(p, c); // Adiciona a caixa (com rota√ß√£o 2) ao problema.
 
                 } else {
                     // Caso haja problemas no parsing do arquivo texto, os recursos
-                    // s„o liberados e interrompe-se a estrutura de repetiÁ„o.
-                    termina_problema(p); // Libera a memÛria alocada.
-                    p = NULL; // A vari·vel recebe NULL, que ser· o valor retornado pela funÁ„o.
+                    // s√£o liberados e interrompe-se a estrutura de repeti√ß√£o.
+                    termina_problema(p); // Libera a mem√≥ria alocada.
+                    p = NULL; // A vari√°vel recebe NULL, que ser√° o valor retornado pela fun√ß√£o.
                     break;  // Interrompe o for devido a problemas no parsing do arquivo.
                 }
             }
@@ -92,57 +92,57 @@ problema processa_arquivo_entrada(const char* nome_arquivo)
         fclose(ptr_arq); // Fecha o arquivo.
     }
 
-    return p; // Retorna uma inst‚ncia do TAD problema ou NULL.
-} // fim da funÁ„o processa_arquivo_entrada
+    return p; // Retorna uma inst√¢ncia do TAD problema ou NULL.
+} // fim da fun√ß√£o processa_arquivo_entrada
 
 
-/* Grava a soluÁ„o do problema de empilhamento em um arquivo texto.
+/* Grava a solu√ß√£o do problema de empilhamento em um arquivo texto.
  *
- * Par‚metros de entrada:
+ * Par√¢metros de entrada:
  *
  *      - nome_arquivo: nome do arquivo a ser gravado;
- *      - solucao_otima: valor da soluÁ„o Ûtima calculada;
- *      - vetor_de_caixas_empilhadas: array com os Ìndices das caixas que formam a
- *                                    pilha da soluÁ„o Ûtima;
+ *      - solucao_otima: valor da solu√ß√£o √≥tima calculada;
+ *      - vetor_de_caixas_empilhadas: array com os √≠ndices das caixas que formam a
+ *                                    pilha da solu√ß√£o √≥tima;
  *      - tam: tamanho do array vetor_de_caixas_empilhadas.
  *
- * A funÁ„o retorna 1 (um) em caso de sucesso na gravaÁ„o do arquivo ou retorna 0 (zero),
- * caso contr·rio.
+ * A fun√ß√£o retorna 1 (um) em caso de sucesso na grava√ß√£o do arquivo ou retorna 0 (zero),
+ * caso contr√°rio.
  */
 int gera_arquivo_saida(const char* nome_arquivo, int solucao_otima, int* vetor_de_caixas_empilhadas, int tam)
 {
     FILE *ptr_arq; // Ponteiro para o arquivo a ser manipulado.
-    int i; // Vari·vel auxiliar.
+    int i; // Vari√°vel auxiliar.
 
-    // Cria um arquivo para gravaÁ„o. Se o arquivo j· existe, descarta o conte˙do atual.
+    // Cria um arquivo para grava√ß√£o. Se o arquivo j√° existe, descarta o conte√∫do atual.
     ptr_arq = fopen(nome_arquivo, "w");
 
     // Verificando se o arquivo foi criado com sucesso.
     if (ptr_arq != NULL) {
 
-        // Grava o valor da soluÁ„o Ûtima e o n˙mero de caixas que formam a pilha
-        // desta soluÁ„o.
+        // Grava o valor da solu√ß√£o √≥tima e o n√∫mero de caixas que formam a pilha
+        // desta solu√ß√£o.
         fprintf(ptr_arq, "%d\n%d\n", solucao_otima, tam);
 
-        // Itera sobre o vetor_de_caixas_empilhadas para gravar o n˙mero da caixa e
-        // a sua rotaÁ„o, no arquivo de saÌda.
+        // Itera sobre o vetor_de_caixas_empilhadas para gravar o n√∫mero da caixa e
+        // a sua rota√ß√£o, no arquivo de sa√≠da.
         for(i = 0; i < tam; i++) {
 
-            // O primeiro valor calculado È o n˙mero da caixa (de acordo com a ordem
+            // O primeiro valor calculado √© o n√∫mero da caixa (de acordo com a ordem
             // em que ela aparece no arquivo texto de entrada). O segundo valor corresponde
-            // ‡ rotaÁ„o da caixa.
+            // √† rota√ß√£o da caixa.
             fprintf(ptr_arq, "%d %d\n",
-                    (vetor_de_caixas_empilhadas[i] % 2 == 0) ?      // Se o Ìndice da caixa for par, soma-se
-                        ((vetor_de_caixas_empilhadas[i] + 2) / 2) : // 2 e divide-se por 2. Caso contr·rio,
-                        ((vetor_de_caixas_empilhadas[i] + 1) / 2),  // soma-se 1 e divide-se por 2.
-                    (vetor_de_caixas_empilhadas[i] % 2 + 1)  // Õndice par È igual a rotaÁ„o 1. Õmpar È rotaÁ„o 2.
+                    (vetor_de_caixas_empilhadas[i] % 2 == 0) ?      // Se o √≠ndice da caixa for par, soma-se
+                    ((vetor_de_caixas_empilhadas[i] + 2) / 2) : // 2 e divide-se por 2. Caso contr√°rio,
+                    ((vetor_de_caixas_empilhadas[i] + 1) / 2),  // soma-se 1 e divide-se por 2.
+                    (vetor_de_caixas_empilhadas[i] % 2 + 1)  // √çndice par √© igual a rota√ß√£o 1. √çmpar √© rota√ß√£o 2.
                    );
         }
 
         fclose(ptr_arq); // Fecha o arquivo.
 
-        return 1; // Sucesso na gravaÁ„o do arquivo.
+        return 1; // Sucesso na grava√ß√£o do arquivo.
     }
 
-    return 0; // Falha na gravaÁ„o do arquivo.
-} // fim da funÁ„o gera_arquivo_saida
+    return 0; // Falha na grava√ß√£o do arquivo.
+} // fim da fun√ß√£o gera_arquivo_saida

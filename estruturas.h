@@ -4,7 +4,7 @@
 #include "lista_encadeada.h"
 
 typedef struct {
-    /* Dimensıes: */
+    /* Dimens√µes: */
     int l; // largura
     int a; // altura
     int p; // profundidade
@@ -13,20 +13,20 @@ typedef struct {
 typedef struct {
     /* Tamanho do problema: */
     int n;
-    /* Altura m·xima da pilha: */
+    /* Altura m√°xima da pilha: */
     int h; // altura
     /* Conjunto de caixas: */
     caixa* caixas;
-    /* Valores associados ‡s caixas: */
+    /* Valores associados √†s caixas: */
     int* v;
 
-    // A vari·vel i_caixas È usada para controle interno,
-    // informando quantas caixas j· foram adicionadas ao
+    // A vari√°vel i_caixas √© usada para controle interno,
+    // informando quantas caixas j√° foram adicionadas ao
     // problema.
     int i_caixas;
 
-    // A vari·vel i_v È usada para controle interno,
-    // informando quantos valores j· foram adicionados ao
+    // A vari√°vel i_v √© usada para controle interno,
+    // informando quantos valores j√° foram adicionados ao
     // problema.
     int i_v;
 } problema_empilhamento;

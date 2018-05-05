@@ -67,8 +67,8 @@ int main(int argc, char* argv[])
         }
 
         recursivo = 1;  // Se o parâmetro -r (ou -R) foi informado e há 4 parâmetros, no mínimo, a variável
-                        // recursivo recebe 1 (um), como indicativo de que se deseja executar a função
-                        // recursiva (top-down).
+        // recursivo recebe 1 (um), como indicativo de que se deseja executar a função
+        // recursiva (top-down).
         ind_arquivo_entrada++; // O nome do arquivo de entrada passa a ser o parâmetro seguinte ao -r (ou -R).
     }
 

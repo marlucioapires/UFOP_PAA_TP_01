@@ -2,145 +2,145 @@
 #include <stdio.h>
 #include "lista_encadeada.h"
 
-/* Aloca espaÁo em memÛria para uma inst‚ncia do TAD lista. N„o h· par‚metros
+/* Aloca espa√ßo em mem√≥ria para uma inst√¢ncia do TAD lista. N√£o h√° par√¢metros
  * de entrada.
  *
- * Retorna uma inst‚ncia do TAD lista ou retorna NULL, caso haja problemas
- * na alocaÁ„o din‚mica de memÛria.
+ * Retorna uma inst√¢ncia do TAD lista ou retorna NULL, caso haja problemas
+ * na aloca√ß√£o din√¢mica de mem√≥ria.
  *
  * Complexidade: O(1)
  */
 lista cria_lista()
 {
-    lista l = NULL; // Inicializa a vari·vel.
+    lista l = NULL; // Inicializa a vari√°vel.
 
-    l = (lista) malloc(sizeof(tipo_lista)); // Aloca espaÁo em memÛria.
+    l = (lista) malloc(sizeof(tipo_lista)); // Aloca espa√ßo em mem√≥ria.
 
-    if(l != NULL) { // Verifica se a alocaÁ„o foi bem sucedida.
+    if(l != NULL) { // Verifica se a aloca√ß√£o foi bem sucedida.
         l->first = NULL; // Inicializa os ponteiros que referenciam
-        l->last = NULL;  // o primeiro e o ˙ltimo nÛs da lista com NULL.
-        l->tamanho = 0;  // O tamanho da lista recÈm criada È 0 (zero).
+        l->last = NULL;  // o primeiro e o √∫ltimo n√≥s da lista com NULL.
+        l->tamanho = 0;  // O tamanho da lista rec√©m criada √© 0 (zero).
     }
 
     return l; // Retorna a lista criada ou NULL.
-} // fim da funÁ„o cria_lista
+} // fim da fun√ß√£o cria_lista
 
 
-/* Libera o espaÁo alocado para uma inst‚ncia do TAD lista. O par‚metro de
- * entrada È uma vari·vel do tipo lista, cujo espaÁo em memÛria ser· liberado.
- * Nenhum valor È retornado pela funÁ„o.
+/* Libera o espa√ßo alocado para uma inst√¢ncia do TAD lista. O par√¢metro de
+ * entrada √© uma vari√°vel do tipo lista, cujo espa√ßo em mem√≥ria ser√° liberado.
+ * Nenhum valor √© retornado pela fun√ß√£o.
  *
  * Complexidade: O(1)
  */
 void termina_lista(lista l)
 {
-    tipo_nodo *p; // Vari·vel auxiliar tipo_nodo usada para iterar sobre os nÛs da lista.
+    tipo_nodo *p; // Vari√°vel auxiliar tipo_nodo usada para iterar sobre os n√≥s da lista.
 
-    // A estrutura de repetiÁ„o a seguir, itera sobre toda a lista, a partir do primeiro nÛ.
-    // Ao desalocar a memÛria utilizada pelo primeiro nÛ, a lista diminui sucessivamente, atÈ
-    // que seu primeiro nÛ tambÈm seja NULL.
+    // A estrutura de repeti√ß√£o a seguir, itera sobre toda a lista, a partir do primeiro n√≥.
+    // Ao desalocar a mem√≥ria utilizada pelo primeiro n√≥, a lista diminui sucessivamente, at√©
+    // que seu primeiro n√≥ tamb√©m seja NULL.
     while(l->first != NULL) {
-        p = l->first; // A vari·vel p recebe a referÍncia do primeiro nÛ da lista.
-        l->first = l->first->next; // O primeiro nÛ da lista È alterado para o seu subsequente.
-        free(p); // Libera o nÛ p (primeiro nÛ da lista).
+        p = l->first; // A vari√°vel p recebe a refer√™ncia do primeiro n√≥ da lista.
+        l->first = l->first->next; // O primeiro n√≥ da lista √© alterado para o seu subsequente.
+        free(p); // Libera o n√≥ p (primeiro n√≥ da lista).
     }
-    free(l); // Desaloca a memÛria restante.
-} // fim da funÁ„o termina_lista
+    free(l); // Desaloca a mem√≥ria restante.
+} // fim da fun√ß√£o termina_lista
 
 
-/* Retorna o tamanho de uma inst‚ncia do TAD lista. O par‚metro de entrada È
- * uma vari·vel do tipo lista.
+/* Retorna o tamanho de uma inst√¢ncia do TAD lista. O par√¢metro de entrada √©
+ * uma vari√°vel do tipo lista.
  *
  * Complexidade: O(1)
  */
 int tamanho_lista(lista l)
 {
     return l->tamanho;
-} // fim da funÁ„o tamanho_lista
+} // fim da fun√ß√£o tamanho_lista
 
 
-/* Insere um elemento, como um novo nÛ, ao final da lista. O par‚metro de entrada
- * È a lista em que a inserÁ„o ser· realizada e o elemento a ser inserido.
+/* Insere um elemento, como um novo n√≥, ao final da lista. O par√¢metro de entrada
+ * √© a lista em que a inser√ß√£o ser√° realizada e o elemento a ser inserido.
  *
- * Retorna 1 (um) em caso de sucesso ou 0 (zero), caso haja falha na alocaÁ„o de
- * memÛria.
+ * Retorna 1 (um) em caso de sucesso ou 0 (zero), caso haja falha na aloca√ß√£o de
+ * mem√≥ria.
  *
  * Complexidade: O(1)
  */
 int insere_apos(lista l, tipo_elemento e)
 {
-    tipo_nodo *p; // Vari·vel auxiliar usada para alocar memÛria.
+    tipo_nodo *p; // Vari√°vel auxiliar usada para alocar mem√≥ria.
 
-    p = (tipo_nodo*) malloc(sizeof(tipo_nodo)); // Aloca a memÛria necess·ria para o nÛ que ser· inserido.
+    p = (tipo_nodo*) malloc(sizeof(tipo_nodo)); // Aloca a mem√≥ria necess√°ria para o n√≥ que ser√° inserido.
 
-    if (!p) // Verifica se alocaÁ„o falhou.
-        return 0; // Retorna 0 (zero), devido a problemas de alocaÁ„o de memÛria.
+    if (!p) // Verifica se aloca√ß√£o falhou.
+        return 0; // Retorna 0 (zero), devido a problemas de aloca√ß√£o de mem√≥ria.
 
-    p->item = e; // O elemento passado como par‚metro È copiado para o nÛ.
-    p->next = NULL; // Como o nÛ ser· o ˙ltimo da lista, a sua referÍncia para o prÛximo È NULL.
+    p->item = e; // O elemento passado como par√¢metro √© copiado para o n√≥.
+    p->next = NULL; // Como o n√≥ ser√° o √∫ltimo da lista, a sua refer√™ncia para o pr√≥ximo √© NULL.
 
-    if (l->first == NULL) // Verifica se a lista est· vazia.
-        l->first = p; // Se est· vazia, o nÛ criado ser· o primeiro.
+    if (l->first == NULL) // Verifica se a lista est√° vazia.
+        l->first = p; // Se est√° vazia, o n√≥ criado ser√° o primeiro.
     else
-        l->last->next = p; // Se a lista n„o est· vazia, o nÛ criado ser· o subsequente ao ˙ltimo nÛ.
+        l->last->next = p; // Se a lista n√£o est√° vazia, o n√≥ criado ser√° o subsequente ao √∫ltimo n√≥.
 
-    l->last = p; // O nÛ criado passa a ser o ˙ltimo nÛ da lista.
+    l->last = p; // O n√≥ criado passa a ser o √∫ltimo n√≥ da lista.
     l->tamanho++; // Incrementa o tamanho da lista.
 
-    return 1; // Retorna 1 (um) indicando sucesso na inserÁ„o.
-} // fim da funÁ„o insere_apos
+    return 1; // Retorna 1 (um) indicando sucesso na inser√ß√£o.
+} // fim da fun√ß√£o insere_apos
 
 
-/* Insere um elemento, como um novo nÛ, no inÌcio da lista. O par‚metro de entrada
- * È a lista em que a inserÁ„o ser· realizada e o elemento a ser inserido.
+/* Insere um elemento, como um novo n√≥, no in√≠cio da lista. O par√¢metro de entrada
+ * √© a lista em que a inser√ß√£o ser√° realizada e o elemento a ser inserido.
  *
- * Retorna 1 (um) em caso de sucesso ou 0 (zero), caso haja falha na alocaÁ„o de
- * memÛria.
+ * Retorna 1 (um) em caso de sucesso ou 0 (zero), caso haja falha na aloca√ß√£o de
+ * mem√≥ria.
  *
  * Complexidade: O(1)
  */
 int insere_inicio(lista l, tipo_elemento e)
 {
-    tipo_nodo *p; // Vari·vel auxiliar usada para alocar memÛria.
+    tipo_nodo *p; // Vari√°vel auxiliar usada para alocar mem√≥ria.
 
-    p = (tipo_nodo*) malloc(sizeof(tipo_nodo)); // Aloca a memÛria necess·ria para o nÛ que ser· inserido.
+    p = (tipo_nodo*) malloc(sizeof(tipo_nodo)); // Aloca a mem√≥ria necess√°ria para o n√≥ que ser√° inserido.
 
-    if (!p) // Verifica se alocaÁ„o falhou.
-        return 0; // Retorna 0 (zero), devido a problemas de alocaÁ„o de memÛria.
+    if (!p) // Verifica se aloca√ß√£o falhou.
+        return 0; // Retorna 0 (zero), devido a problemas de aloca√ß√£o de mem√≥ria.
 
-    p->item = e; // O elemento passado como par‚metro È copiado para o nÛ.
-    p->next = l->first; // Como o nÛ ser· o primeiro da lista, a sua referÍncia para o prÛximo
-                        // È o nÛ que est· como primeiro atualmente.
+    p->item = e; // O elemento passado como par√¢metro √© copiado para o n√≥.
+    p->next = l->first; // Como o n√≥ ser√° o primeiro da lista, a sua refer√™ncia para o pr√≥ximo
+    // √© o n√≥ que est√° como primeiro atualmente.
     l->tamanho++; // Incrementa o tamanho da lista.
-    l->first = p; // O nÛ criado passa a ser o primeiro nÛ da lista.
+    l->first = p; // O n√≥ criado passa a ser o primeiro n√≥ da lista.
 
-    if (l->tamanho == 1) // Se a lista tem tamanho um, isso significa que o nÛ inserido
-        l->last = p;     // tambÈm ser· o ˙ltimo nÛ da lista.
+    if (l->tamanho == 1) // Se a lista tem tamanho um, isso significa que o n√≥ inserido
+        l->last = p;     // tamb√©m ser√° o √∫ltimo n√≥ da lista.
 
-    return 1; // Retorna 1 (um) indicando sucesso na inserÁ„o.
-} // fim da funÁ„o insere_inicio
+    return 1; // Retorna 1 (um) indicando sucesso na inser√ß√£o.
+} // fim da fun√ß√£o insere_inicio
 
 
-/* Permite obter o valor armazenado em um nÛ de uma lista, com um artifÌcio que permite manter
- * a posiÁ„o do nÛ e assim percorrer todos os nÛs sequencialmente. Os par‚metros de entrada s„o
- * a lista que se deseja consultar e a referÍncia para o ˙ltimo nÛ lido. Se ˙ltimo nÛ lido È NULL,
- * retorna-se o conte˙do do primeiro nÛ da lista. Caso contr·rio, retorna-se o conte˙do do nÛ
- * subsequente ao ˙ltimo nÛ lido.
+/* Permite obter o valor armazenado em um n√≥ de uma lista, com um artif√≠cio que permite manter
+ * a posi√ß√£o do n√≥ e assim percorrer todos os n√≥s sequencialmente. Os par√¢metros de entrada s√£o
+ * a lista que se deseja consultar e a refer√™ncia para o √∫ltimo n√≥ lido. Se √∫ltimo n√≥ lido √© NULL,
+ * retorna-se o conte√∫do do primeiro n√≥ da lista. Caso contr√°rio, retorna-se o conte√∫do do n√≥
+ * subsequente ao √∫ltimo n√≥ lido.
  *
- * Retorna o conte˙do de um nÛ da lista e retorna tambÈm a referÍncia para o nÛ, atravÈs do par‚metro
- * de entrada tipo_nodo* passado por referÍncia.
+ * Retorna o conte√∫do de um n√≥ da lista e retorna tamb√©m a refer√™ncia para o n√≥, atrav√©s do par√¢metro
+ * de entrada tipo_nodo* passado por refer√™ncia.
  *
  * Complexidade: O(1)
  */
 tipo_chave get_next_chave(lista l, tipo_nodo** n)
 {
-    if ((*n) == NULL)       // Se o par‚metro È NULL o nÛ lido
-        (*n) = l->first;    // ser· o primeiro nÛ da lista.
+    if ((*n) == NULL)       // Se o par√¢metro √© NULL o n√≥ lido
+        (*n) = l->first;    // ser√° o primeiro n√≥ da lista.
     else
-        (*n) = (*n)->next; // Caso contr·rio, o nÛ lido ser· o nÛ subsequente ao ˙ltimo lido.
+        (*n) = (*n)->next; // Caso contr√°rio, o n√≥ lido ser√° o n√≥ subsequente ao √∫ltimo lido.
 
     if (*n)
-        return (*n)->item.chave; // Retorna o conte˙do do nÛ.
+        return (*n)->item.chave; // Retorna o conte√∫do do n√≥.
     else
-        return 0; // Retorna 0 (zero) em caso de n„o haver nÛ (NULL).
-} // fim da funÁ„o get_next_chave
+        return 0; // Retorna 0 (zero) em caso de n√£o haver n√≥ (NULL).
+} // fim da fun√ß√£o get_next_chave
