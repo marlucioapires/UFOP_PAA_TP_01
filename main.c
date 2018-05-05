@@ -95,7 +95,8 @@ int main(int argc, char* argv[])
                 printf("\nERRO: Problemas na gravação do arquivo \"%s\".\n", argv[(ind_arquivo_entrada + 1)]);
             }
 
-            free(vetor_de_caixas_empilhadas); // Desaloca a memória usada para o vetor.
+            if (vetor_de_caixas_empilhadas)
+                free(vetor_de_caixas_empilhadas); // Desaloca a memória usada para o vetor.
         } else {
             // Exibe mensagem de erro devido a falha na alocação de memória para resolução do problema.
             printf("\nERRO: Problemas na alocação de memória.\n");

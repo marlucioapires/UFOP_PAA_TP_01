@@ -275,11 +275,13 @@ int empilhamento_bottom_up(problema p, int** vetor_de_caixas_empilhadas, int* ta
     free(matriz_emp[0]);    // Libera a memória alocada para a matriz
     free(matriz_emp);       // de soluções ótimas.
 
-    // Gera um vetor com os índices das caixas utilizadas no empilhamento de altura máxima h.
-    (*vetor_de_caixas_empilhadas) = cria_vetor_caixas_empilhadas(matriz_indices, p->caixas, p->h, pos, tam);
+    if (solucao_otima > 0) { // Se a variável é maior do que 0 (zero), uma solução ótima foi encontrada.
+        // Gera um vetor com os índices das caixas utilizadas no empilhamento de altura máxima h.
+        (*vetor_de_caixas_empilhadas) = cria_vetor_caixas_empilhadas(matriz_indices, p->caixas, p->h, pos, tam);
 
-    if (!(*vetor_de_caixas_empilhadas)) // Verifica se a alocação foi bem sucedida.
-        solucao_otima = -1; // Falha, devido à ausência de recursos computacionais.
+        if (!(*vetor_de_caixas_empilhadas)) // Verifica se a alocação foi bem sucedida.
+            solucao_otima = -1; // Falha, devido à ausência de recursos computacionais.
+    }
 
     free(matriz_indices[0]);    // Libera a memória alocada para a matriz
     free(matriz_indices);       // que guarda a sequência de empilhamento.
@@ -489,11 +491,13 @@ int empilhamento_top_down(problema p, int** vetor_de_caixas_empilhadas, int* tam
     free(matriz_emp[0]);    // Libera a memória alocada para a matriz
     free(matriz_emp);       // de soluções ótimas.
 
-    // Gera um vetor com os índices das caixas utilizadas no empilhamento de altura máxima h.
-    (*vetor_de_caixas_empilhadas) = cria_vetor_caixas_empilhadas(matriz_indices, p->caixas, p->h, pos, tam);
+    if (solucao_otima > 0) { // Se a variável é maior do que 0 (zero), uma solução ótima foi encontrada.
+        // Gera um vetor com os índices das caixas utilizadas no empilhamento de altura máxima h.
+        (*vetor_de_caixas_empilhadas) = cria_vetor_caixas_empilhadas(matriz_indices, p->caixas, p->h, pos, tam);
 
-    if (!(*vetor_de_caixas_empilhadas)) // Verifica se a alocação foi bem sucedida.
-        solucao_otima = -1; // Falha, devido à ausência de recursos computacionais.
+        if (!(*vetor_de_caixas_empilhadas)) // Verifica se a alocação foi bem sucedida.
+            solucao_otima = -1; // Falha, devido à ausência de recursos computacionais.
+    }
 
     free(matriz_indices[0]);    // Libera a memória alocada para a matriz
     free(matriz_indices);       // que guarda a sequência de empilhamento.
